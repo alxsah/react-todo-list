@@ -1,0 +1,12 @@
+.paper {
+  overflow-x: scroll;
+  .icon-container {
+    display: flex;
+    .add-icon:hover, .edit-icon:hover, .delete-icon:hover {
+      color: blue;
+    }
+  }
+}
+.recording { 
+  color: red;
+}

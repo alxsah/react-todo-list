@@ -1,0 +1,14 @@
+.App .heading-container {
+  text-align: center;
+  h1 {
+    display: inline-block;
+    background: -webkit-linear-gradient(left, #db0fce, #1061e5);
+    background: -o-linear-gradient(left, #db0fce, #1061e5);
+    background: -moz-linear-gradient(left, #db0fce, #1061e5);
+    background: linear-gradient(left, #db0fce, #1061e5);
+    font-family: 'Roboto';
+    color:transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
