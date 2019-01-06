@@ -1,7 +1,7 @@
-import './RecordDialog.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import helpers from '../helpers';
+import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -9,13 +9,24 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
+const styles = () => ({
+  bold: {
+    fontWeight: 'bold'
+  },
+  recordItem: {
+    marginBottom: '48px'
+  }
+});
+
 class RecordDialog extends Component {
   state = {
     records: []
   }
+
   static propTypes = {
     setDialogState: PropTypes.func,
-    open: PropTypes.bool
+    open: PropTypes.bool,
+    classes: PropTypes.object
   }
 
   handleEnter = () => this.setState({records: helpers.getRecords()});
@@ -26,12 +37,12 @@ class RecordDialog extends Component {
     return (
       this.state.records.length === 0 ? <p>There are no records available.</p> :
       this.state.records.map((record, index) => (
-        <div className="record-item" key={index}>
-          <p><span className="bold">Action:</span> {record.action}</p>
-          <p><span className="bold">Todo ID:</span> {record.todo.id}</p>
-          <p><span className="bold">Todo Name:</span> {record.todo.name}</p>
-          <p><span className="bold">Todo Description:</span> {record.todo.description}</p>
-          <p><span className="bold">Todo Date:</span> {record.todo.date}</p>
+        <div className={this.props.classes.recordItem} key={index}>
+          <p><span className={this.props.classes.bold}>Action:</span> {record.action}</p>
+          <p><span className={this.props.classes.bold}>Todo ID:</span> {record.todo.id}</p>
+          <p><span className={this.props.classes.bold}>Todo Name:</span> {record.todo.name}</p>
+          <p><span className={this.props.classes.bold}>Todo Description:</span> {record.todo.description}</p>
+          <p><span className={this.props.classes.bold}>Todo Date:</span> {record.todo.date}</p>
         </div>
       ))
     )
@@ -72,4 +83,5 @@ class RecordDialog extends Component {
   }
 }
 
-export default RecordDialog;
+const RecordDialogStyled = withStyles(styles)(RecordDialog);
+export default RecordDialogStyled;

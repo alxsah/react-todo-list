@@ -1,6 +1,7 @@
-import './MaterialTable.scss';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import helpers from '../helpers';
+import { withStyles } from '@material-ui/core/styles';
 import TodoDialog from '../TodoDialog/TodoDialog';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,6 +16,41 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
+const styles = theme => ({
+  paper: {
+    overflowX: 'scroll',
+  },
+  iconContainer: {
+    display: 'flex'
+  },
+  addIcon: {
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  editIcon: {
+    '&:hover': {
+      color: theme.palette.primary.main
+    }
+  },
+  recordIcon: {
+    '&.hover': {
+      color: theme.palette.secondary.main
+    }
+  },
+  deleteIcon: {
+    '&:hover': {
+      color: theme.palette.secondary.main
+    }
+  },
+  recording: {
+    color: theme.palette.secondary.main
+  },
+  hidden: {
+    visibility: 'hidden'
+  }
+});
+
 class MaterialTable extends Component {
   state = {
     todos: [],
@@ -24,6 +60,10 @@ class MaterialTable extends Component {
     isEditDialogOpen: false,
     recording: false,
   };
+
+  static propTypes = {
+    classes: PropTypes.object
+  }
 
   componentDidMount = () => this.setState({todos: helpers.getTodos()});
 
@@ -119,28 +159,28 @@ class MaterialTable extends Component {
       <TableCell>Description</TableCell>
       <TableCell>Date</TableCell>
       <TableCell className="icon-cell">
-        <div className="icon-container">
+        <div className={this.props.classes.iconContainer}>
           <IconButton 
-            className="record-icon"
+            className={this.props.classes.recordIcon}
             aria-label="Record">
             <FiberManualRecordIcon
-              className={this.state.recording ? 'recording' : ''}
+              className={this.state.recording ? this.props.classes.recording : ''}
               onClick={this.handleRecordClick}/>
           </IconButton>
           <IconButton 
-            className="add-icon"
+            className={this.props.classes.addIcon}
             aria-label="Add">
             <AddIcon 
               onClick={() => this.setDialogState('Add', true)}/>
           </IconButton>
           <IconButton 
-            className={'edit-icon ' + (this.isNothingSelected() ? 'hidden' : '')} 
+            className={`${this.props.classes.editIcon} ${this.isNothingSelected() ? this.props.classes.hidden: ''}`}
             aria-label="Edit">
             <EditIcon 
               onClick={() => this.setDialogState('Edit', true)}/>
           </IconButton>
           <IconButton 
-            className={'delete-icon ' + (this.isNothingSelected() ? 'hidden' : '')} 
+            className={`${this.props.classes.deleteIcon} ${this.isNothingSelected() ? this.props.classes.hidden : ''}`} 
             aria-label="Delete">
             <DeleteIcon 
               onClick={this.handleDeleteClick}/>
@@ -178,7 +218,7 @@ class MaterialTable extends Component {
   
   render() {
     return (
-    <Paper className="paper">
+    <Paper className={this.props.classes.paper}>
       {this.renderDialogs()}
       <Table padding="dense">
         {this.renderTableHead()}
@@ -189,4 +229,5 @@ class MaterialTable extends Component {
   }
 }
 
-export default MaterialTable;
+const MaterialTableStyled = withStyles(styles)(MaterialTable);
+export default MaterialTableStyled;

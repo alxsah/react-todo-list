@@ -1,6 +1,6 @@
-import './TodoDialog.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -9,18 +9,29 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+const styles = theme => ({
+  errorMessage: {
+    fontFamily: 'Roboto',
+    color: theme.palette.secondary.main
+  },
+  hidden: {
+    visibility: 'hidden'
+  }
+});
+
 class TodoDialog extends Component {
   state = {
     showMissingFieldsError: false,
     error: false
   }
-  
+
   static propTypes = {
     setDialogState: PropTypes.func,
     handleCompletion: PropTypes.func,
     dialogType: PropTypes.string,
     selectedTodo: PropTypes.object,
-    open: PropTypes.bool
+    open: PropTypes.bool,
+    classes: PropTypes.object
   }
 
   static defaultProps = {
@@ -63,41 +74,41 @@ class TodoDialog extends Component {
   renderNameTextField = () => (
     <TextField
       autoFocus
+      fullWidth
       className="name-field"
       style={{marginBottom: '24px'}}
       margin="normal"
       id="name"
-      label="Todo Name"
+      label="Todo Name (Max 50 chars)"
       type="text"
       defaultValue={this.props.selectedTodo.name}
       inputRef={this.nameInput}
-      fullWidth/>
+      inputProps={{ maxLength: 50 }}
+      />
   );
 
   renderDescriptionTextField = () => (
     <TextField
       autoFocus
       multiline
+      fullWidth
       rows="4"
       margin="dense"
       id="description"
-      label="Description"
+      label="Description (Max 200 chars)"
       type="text"
       defaultValue={this.props.selectedTodo.description}
       inputRef={this.descriptionInput}
-      fullWidth/>
+      inputProps={{ maxLength: 200 }}
+      />
   );
 
   renderDialogContent = () => (
     <DialogContent>
       {this.renderNameTextField()}
       {this.renderDescriptionTextField()}
-      <p className={this.state.showMissingFieldsError ? 'error-message' : 'hidden'}>
+      <p className={this.state.showMissingFieldsError ? this.props.classes.errorMessage : this.props.classes.hidden}>
         Please fill out all the fields.
-      </p>
-      <p className={this.state.error ? 'error-message' : 'hidden'}>
-        There was an error
-        {this.props.dialogType === 'Add' ? 'adding' : 'editing'} your todo.
       </p>
     </DialogContent>
   );
@@ -107,7 +118,7 @@ class TodoDialog extends Component {
       <Button onClick={this.handleSubmit} color="primary">
         Confirm
       </Button>
-      <Button onClick={this.handleClose} color="primary">
+      <Button onClick={this.handleClose} color="secondary">
         Cancel
       </Button>
     </DialogActions>
@@ -128,4 +139,5 @@ class TodoDialog extends Component {
   }
 }
 
-export default TodoDialog;
+const TodoDialogStyled = withStyles(styles)(TodoDialog);
+export default TodoDialogStyled;

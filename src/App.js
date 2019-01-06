@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import './App.scss';
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from './MaterialTable/MaterialTable';
 import RecordDialog from './RecordDialog/RecordDialog';
 import Button from '@material-ui/core/Button';
 
+const styles = () => ({
+  headingContainer: {
+    textAlign: 'center'
+  },
+  heading: {
+    display: 'inline-block',
+    fontFamily: 'Roboto',
+    color: 'transparent',
+    backgroundClip: 'text',
+    WebkitBackgroundClip: 'text',
+    background: 'linear-gradient(left, #db0fce, #1061e5)'
+  }
+});
 
 class App extends Component {
   state = {
@@ -24,13 +37,13 @@ class App extends Component {
         <Button className="view-todos-record" color="primary" onClick={() => this.setDialogState(true)}>
           View Record
         </Button>
-        <div className="heading-container">
-          <h1>Todo List</h1>
+        <div className={this.props.classes.headingContainer}>
+          <h1 className={this.props.classes.heading}>Todo List</h1>
         </div>
         <MaterialTable></MaterialTable>
       </div>
     );
   }
 }
-
-export default hot(module)(App);
+const AppStyled = withStyles(styles)(App);
+export default hot(module)(AppStyled);
