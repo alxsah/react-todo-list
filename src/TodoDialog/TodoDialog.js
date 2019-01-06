@@ -16,6 +16,11 @@ const styles = theme => ({
   },
   hidden: {
     visibility: 'hidden'
+  },
+  dialogTitle: {
+    '& h2': {
+      color: theme.palette.primary.main
+    }
   }
 });
 
@@ -131,7 +136,7 @@ class TodoDialog extends Component {
       onClose={this.handleClose}
       onEnter={this.handleEnter}
       aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">{this.props.dialogType} a Todo</DialogTitle>
+      <DialogTitle className={this.props.classes.dialogTitle} id="form-dialog-title">{this.props.dialogType} a Todo</DialogTitle>
       {this.renderDialogContent()}
       {this.renderDialogActions()}
     </Dialog>

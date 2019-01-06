@@ -5,7 +5,7 @@ import MaterialTable from './MaterialTable/MaterialTable';
 import RecordDialog from './RecordDialog/RecordDialog';
 import Button from '@material-ui/core/Button';
 
-const styles = () => ({
+const styles = theme => ({
   headingContainer: {
     textAlign: 'center'
   },
@@ -15,7 +15,7 @@ const styles = () => ({
     color: 'transparent',
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
-    background: 'linear-gradient(left, #db0fce, #1061e5)'
+    background: `linear-gradient(left, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`
   }
 });
 

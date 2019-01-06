@@ -9,12 +9,23 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-const styles = () => ({
+const styles = theme => ({
   bold: {
     fontWeight: 'bold'
   },
   recordItem: {
-    marginBottom: '48px'
+    marginBottom: '8px',
+    background: '#C5CAE9',
+    padding: '8px 16px',
+    borderRadius: '8px',
+    '& p': {
+      margin: '8px 0'
+    }
+  },
+  dialogTitle: {
+    '& h2': {
+      color: theme.palette.primary.main
+    }
   }
 });
 
@@ -75,7 +86,7 @@ class RecordDialog extends Component {
         onEnter={this.handleEnter}
         scroll="paper"
         aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Recorded Todo Actions</DialogTitle>
+        <DialogTitle className={this.props.classes.dialogTitle} id="form-dialog-title">Recorded Todo Actions</DialogTitle>
         {this.renderDialogContent()}
         {this.renderDialogActions()}
       </Dialog>
